@@ -25,11 +25,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     };
 
     console.log("🔄 Proxy CAPI: Enviando para Meta...");
-    console.log("📊 Proxy CAPI: Pixel ID:", "1142320931265624");
+    console.log("📊 Proxy CAPI: Pixel ID:", "703302575818162");
     console.log("📊 Proxy CAPI: Payload size:", JSON.stringify(payload).length, "bytes");
 
     const response = await fetch(
-      "https://graph.facebook.com/v19.0/1142320931265624/events?access_token=EAAQfmxkTTZCcBPBzYfYLjHq7cYDIOxtU6nBDVSA26UoboA5fk6XsHWrRMb1xZB99muXPJDHJdLVx55J29lXSch24gn8myCWa5arNRPD4zUIEHZBYVyauAhSyYwEtVndXF6U8nKQer6pQp51LW9zMMxCG76a4qtKkLJArQZBLPZA7vXLMpwltxAy36MVrJ9gZDZD",
+      "https://graph.facebook.com/v19.0/703302575818162/events?access_token=EAAQfmxkTTZCcBPMtbiRdOTtGC1LycYJsKXnFZCs3N04MsoBjbx5WdvaPhObbtmKg3iDZBJZAjAlpzqWAr80uEUsUSm95bVCODpzJSsC3X6gA9u6yPC3oDko8gUIMW2SA5C7MOsZBvmyVN72N38UcMKp8uGbQaPxe9r5r66H6PAXuZCieIl6gPIFU5c2ympRwZDZD",
       {
         method: "POST",
         headers: {
