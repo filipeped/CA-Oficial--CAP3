@@ -9,6 +9,40 @@ const ACCESS_TOKEN = "EAAQfmxkTTZCcBPMtbiRdOTtGC1LycYJsKXnFZCs3N04MsoBjbx5WdvaPh
 const META_URL = `https://graph.facebook.com/v19.0/${PIXEL_ID}/events`;
 
 // ✅ RATE LIMITING
+const RATE_LIMIT = 30;
+const rateLimitMap = new Map();
+
+function rateLimit(ip: string): boolean {
+  const now = Date.now();
+  const windowMs = 60000;
+  
+  if (!rateLimitMap.has(ip)) {
+    rateLimitMap.set(ip, []);
+  }
+  
+  const timestamps = rateLimitMap.get(ip)!.filter((t: number) => now - t < windowMs);
+  
+  if (timestamps.length >= RATE_LIMIT) {
+    return false;
+  }
+  
+  timestamps.push(now);
+  rateLimitMap.set(ip, timestamps);
+  
+  if (rateLimitMap.size > 1000) {
+    const oldestKey = rateLimitMap.keys().next().value;
+    rateLimitMap.delete(oldestKey);
+  }
+  
+  return true;
+}
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const startTime = Date.now();
+  const ip = (req.headers["x-forwarded-for"] as string)?.split(",")[0]?.trim() || req.socket.remoteAddress || "unknown";
+  const userAgent = req.headers["user-agent"] || "";
+
+  console.log("🔄 Requisição recebida:", { ip, userAgent, contentLength: req.headers["content-length"] });
 
   // ✅ CORS COMPLETO
   const ALLOWED_ORIGINS = [
